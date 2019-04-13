@@ -3,8 +3,9 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import ItemsList from './components/pages/itemsList';
 import {Container, Row, Col, Card, Button, Carousel, Navbar, Form, Nav, FormControl} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
-export default class App extends React.Component {
+class App extends React.Component {
     render() {
         return (
             <Container fluid><br/>
@@ -58,9 +59,17 @@ export default class App extends React.Component {
                     </Carousel.Item>
                     </Carousel><br/>
                 <Container >
-                    <ItemsList />
+                    <ItemsList items={this.props.items}/>
                 </Container>
             </Container>
         )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        items: state.items.items
+    }
+}
+
+export default connect(mapStateToProps)(App);
