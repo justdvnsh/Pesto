@@ -1,7 +1,33 @@
 "use strict"
 // Step 1 define the reducer 
-export function itemReducers(state={items:[]}, action) {
+export function itemReducers(state={
+    items: [{
+                id: 1,
+                title: 'First Title',
+                description: 'Some description !',
+                price: 33.00,
+                cateogory: 'Cloth'
+            },
+            {
+                id: 2,
+                title: 'Second Title',
+                description: 'Some description !',
+                price: 50.00,
+                cateogory: 'Book'
+            },
+            {
+                id: 3,
+                title: 'Third Title',
+                description: 'Some description !',
+                price: 41.00,
+                cateogory: 'Fashion and MakeUp' 
+            }]
+    }, action) {
     switch(action.type){
+        case "GET_ITEMS":
+        return {items: [...state.items]} ;
+        break;
+
         case "POST_ITEM":
         return {items:[...state.items, ...action.payload]} ;
         break;

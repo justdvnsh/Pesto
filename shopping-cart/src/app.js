@@ -2,19 +2,31 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import ItemsList from './components/pages/itemsList';
-import {Container, Row, Col, Card, Button, Carousel, Navbar, Form, Nav, FormControl} from 'react-bootstrap';
+import ItemForm from './components/pages/itemForm';
+import {Container, Row, Col, Card, Button, Carousel, Navbar, Form, Nav, FormControl, Dropdown} from 'react-bootstrap';
 import {connect} from 'react-redux';
+import {getItems} from './actions/itemActions';
+import {bindActionCreators} from 'redux';
 
 class App extends React.Component {
+    componentDidMount() {
+        this.props.getItems;
+    }
     render() {
         return (
             <Container fluid><br/>
                 <Navbar bg="light" variant="light">
                     <Navbar.Brand href="#home">Shopping Site</Navbar.Brand>
                     <Nav className="mr-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#features">Features</Nav.Link>
-                    <Nav.Link href="#pricing">Pricing</Nav.Link>
+                    <Nav.Link href="#home">
+                        Home
+                    </Nav.Link>
+                    <Nav.Link href="#features">
+                        Features
+                    </Nav.Link>
+                    <Nav.Link href="#features">
+                        About
+                    </Nav.Link>
                     </Nav>
                     <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -59,7 +71,8 @@ class App extends React.Component {
                     </Carousel.Item>
                     </Carousel><br/>
                 <Container >
-                    <ItemsList items={this.props.items}/>
+                    <ItemsList items={this.props.items}/><br/>
+                    <ItemForm />
                 </Container>
             </Container>
         )
@@ -72,4 +85,10 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ 
+        getItems: getItems 
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
