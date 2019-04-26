@@ -6,21 +6,24 @@ export function itemReducers(state={
                 title: 'First Title',
                 description: 'Some description !',
                 price: 33.00,
-                cateogory: 'Cloth'
+                cateogory: 'Cloth',
+                quantity: 1
             },
             {
                 id: 2,
                 title: 'Second Title',
                 description: 'Some description !',
                 price: 50.00,
-                cateogory: 'Book'
+                cateogory: 'Book',
+                quantity: 1
             },
             {
                 id: 3,
                 title: 'Third Title',
                 description: 'Some description !',
                 price: 41.00,
-                cateogory: 'Fashion and MakeUp' 
+                cateogory: 'Fashion and MakeUp' ,
+                quantity: 1
             }]
     }, action) {
     switch(action.type){

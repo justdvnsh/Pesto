@@ -7,14 +7,15 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 class ItemsList extends React.Component {
 
-    handleCart(id, title, description, price, cateogory){    
+    handleCart(id, title, description, price, cateogory, quantity){    
         const item = [ 
             {      
                 id,
                 title,
                 description,
                 cateogory,
-                price
+                price,
+                quantity: 1
             }
         ]    
 
@@ -35,7 +36,7 @@ class ItemsList extends React.Component {
                                 {item.cateogory}<br/>
                                 <b>price: {item.price}</b><br/>
                                 </Card.Body></Card><br/>
-                                <Button variant="primary" onClick={() => this.handleCart(item.id, item.title, item.description, item.price, item.cateogory)}>Buy Now</Button>
+                                <Button variant="primary" onClick={() => this.handleCart(item.id, item.title, item.description, item.price, item.cateogory, item.quantity)}>Buy Now</Button>
                             </Card.Body>
                     </Card>
                 </Col>

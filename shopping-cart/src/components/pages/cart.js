@@ -2,8 +2,28 @@
 import React from 'react';
 import {Row, Col, Button, Card } from 'react-bootstrap';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux'
+import {DeleteCartItem, updateCart} from '../../actions/cartActions';
 
 class Cart extends React.Component {
+
+    handleDelete(id) {
+         // creating a copy of all the items
+         const itemToDelete = this.props.cart
+
+         // finding the index we want to delete
+         const indexOfItemToDelete = itemToDelete.findIndex((item) => item.id === id);
+ 
+         // deleting the item
+         let cartAfterDelete = [...itemToDelete.slice(0, indexOfItemToDelete), ...itemToDelete.slice(indexOfItemToDelete + 1)]
+
+         this.props.DeleteCartItem(cartAfterDelete)
+    }
+
+    onIncrement() {}
+
+    onDecrement() {}
+
     renderCart() {
         const cartItem = this.props.cart.map((item) => {
             return (
@@ -14,10 +34,10 @@ class Cart extends React.Component {
                                 <h5>{item.title}</h5><span>    </span>  
                                 <h5>{item.price}</h5><span>    </span>  
                                 <h5>qty. <Button bsstyle='success'>{item.quantity}</Button></h5><span>    </span>  
-                                <Button bstyle='default' bssize='small'>-</Button>
-                                <Button bstyle='default' bssize='small'>+</Button> 
+                                <Button onClick={this.onDecrement.bind(this, item.id, item.quantity)} bstyle='default' bssize='small'>-</Button>
+                                <Button onClick={this.onIncrement.bind(this, item.id, item.quantity)} bstyle='default' bssize='small'>+</Button> 
                                 <span>    </span>
-                                <Button bsstyle='danger' bssize='small'>DELETE</Button>
+                                <Button bsstyle='danger' bssize='small' onClick={this.handleDelete.bind(this, item.id)}>DELETE</Button>
                             </Card.Body>
                         </Card>
                     </Col>
@@ -57,4 +77,11 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Cart);
+let mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        DeleteCartItem,
+        updateCart
+    }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
