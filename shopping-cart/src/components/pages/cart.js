@@ -1,6 +1,6 @@
 "use strict";
 import React from 'react';
-import {Row, Col, Button, Card } from 'react-bootstrap';
+import {Row, Col, Button, Card, Container } from 'react-bootstrap';
 import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux'
 import {DeleteCartItem, updateCart} from '../../actions/cartActions';
@@ -20,28 +20,32 @@ class Cart extends React.Component {
          this.props.DeleteCartItem(cartAfterDelete)
     }
 
-    onIncrement() {}
+    onIncrement(id) {
+        this.props.updateCart(id,1)
+    }
 
-    onDecrement() {}
+    onDecrement(id, quantity) {
+        if ( quantity > 1 ) {
+            this.props.updateCart(id, -1)
+        }
+    }
 
     renderCart() {
         const cartItem = this.props.cart.map((item) => {
             return (
-                <Row key={item.id}>
-                    <Col xs={12} >
+                    <Col xs={12} key={item.id}>
                         <Card>
                             <Card.Body>
                                 <h5>{item.title}</h5><span>    </span>  
                                 <h5>{item.price}</h5><span>    </span>  
                                 <h5>qty. <Button bsstyle='success'>{item.quantity}</Button></h5><span>    </span>  
                                 <Button onClick={this.onDecrement.bind(this, item.id, item.quantity)} bstyle='default' bssize='small'>-</Button>
-                                <Button onClick={this.onIncrement.bind(this, item.id, item.quantity)} bstyle='default' bssize='small'>+</Button> 
+                                <Button onClick={this.onIncrement.bind(this, item.id)} bstyle='default' bssize='small'>+</Button> 
                                 <span>    </span>
                                 <Button bsstyle='danger' bssize='small' onClick={this.handleDelete.bind(this, item.id)}>DELETE</Button>
                             </Card.Body>
                         </Card>
                     </Col>
-                </Row>
             )
         })
 
@@ -64,9 +68,9 @@ class Cart extends React.Component {
         }
 
         return (
-            <Col xs={12}>
+            <Container>
                 {cartItem}
-            </Col>
+            </Container>
         )
     }
 };

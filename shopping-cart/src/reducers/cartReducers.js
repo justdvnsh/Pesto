@@ -5,7 +5,7 @@ export function cartReducers(state={
 }, action) {
     switch(action.type) {
         case 'ADD_TO_CART':
-        return {state, cart: action.payload}
+        return {...state, cart: action.payload}
         break;
 
         case 'UPDATE_CART':
@@ -22,13 +22,13 @@ export function cartReducers(state={
         let cartUpdate = [ ...itemToUpdate.slice(0, indexOfItemToUpdate), newItem, ...itemToUpdate.slice(indexOfItemToUpdate + 1) ] 
 
         return {
-            state,
+            ...state,
             cart: cartUpdate
         }
         break;
 
         case 'DELETE_CART_ITEM':
-        return {state, cart: action.payload}
+        return {...state, cart: action.payload}
         break;
     }
 
